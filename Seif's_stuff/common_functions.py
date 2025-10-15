@@ -53,6 +53,7 @@ def initialize_env():
     snowflake_dbt_maxab = json.loads(get_secret("prod/dbt/dbt_maxab"))
     maxsupport_secret = json.loads(get_secret("prod/db/maxsupport/writer"))
     fintech_service_account = json.loads(get_secret("prod/fintechServiceEmail/credentials"))
+    dwh_writer_secret = json.loads(get_secret("prod/db/datawarehouse/sagemaker"))
 
     # RETRIEVING MAINTAINED SCHEMAS S3 BUCKETS NAMES
     os.environ["EGYPT_MAINTAINED_BUCKET"] = maintained_schemas_buckets["egypt_maintained"]
@@ -201,6 +202,12 @@ def initialize_env():
     os.environ["ingestion_user"] = snowflake_ingestion_secrets["username"]
     os.environ["ingestion_account"] = snowflake_ingestion_secrets["account"]
     os.environ["ingestion_role"] = snowflake_ingestion_secrets["role"]
+    
+    
+    os.environ["DWH_WRITER_HOST_NEW"] = dwh_writer_secret["host"]
+    os.environ["DWH_WRITER_NAME_NEW"] = dwh_writer_secret["dbname"]
+    os.environ["DWH_WRITER_USER_NAME_NEW"] = dwh_writer_secret["username"]
+    os.environ["DWH_WRITER_PASSWORD_NEW"] = dwh_writer_secret["password"] 
     
     ########### FINTECH_EMONEY credentials ##########
     os.environ["FINTECH_EMONEY_EMAIL"] = fintech_service_account["email_name"]
